@@ -62,28 +62,28 @@ app.post('/checkword', (req, res) => {
     console.log(word);
     const word_to_guess_split = word.split('');
     
-    let guessedWord = req.body.guessedWord;
-    const guessedWord_split = guessedWord.split('');
+    let foundWord = req.body.foundWord;
+    const foundWord_split = foundWord.split('');
 
-    if (guessedWord.length !== word.length) {
+    if (foundWord.length !== word.length) {
         res.send("<p>Length not adequate</p>");
     } else {
         attempts++;
         let result = '';
 
-        for (let i = 0; i < guessedWord_split.length; i++) {
-            if (guessedWord_split[i] === word_to_guess_split[i]) {
-                result += "<p class='correct'>" + guessedWord_split[i] + "</p>";
+        for (let i = 0; i < foundWord_split.length; i++) {
+            if (foundWord_split[i] === word_to_guess_split[i]) {
+                result += "<p class='correct'>" + foundWord_split[i] + "</p>";
             }
-            else if (word_to_guess_split.includes(guessedWord_split[i])) {
-                result += "<p class='present'>" + guessedWord_split[i] + "</p>";
+            else if (word_to_guess_split.includes(foundWord_split[i])) {
+                result += "<p class='present'>" + foundWord_split[i] + "</p>";
             }
             else {
-                result += guessedWord_split[i];
+                result += foundWord_split[i];
             }
         }
         
-        if (guessedWord.trim() === word.trim()) {
+        if (foundWord.trim() === word.trim()) {
             fetch(score_uri + "/setscore", {
                 method: 'POST',
                 headers: {

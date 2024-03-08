@@ -21,10 +21,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get('/getscore', (req, res) => {
     let resData = {};
   
-    client.get('nb_words_found').then((data) => {
+    client.get('words_found_record').then((data) => {
         resData.nb = data;
   
-        client.get('average_try').then((data) => {
+        client.get('guess_trials').then((data) => {
             resData.avg = data;
             res.json(resData);
         })
@@ -36,18 +36,18 @@ app.post('/setscore', (req, res) => {
     const int_attempts = parseInt(attempts);
     let resData = {};
     
-    client.get('nb_words_found').then((data) => {
+    client.get('words_found_record').then((data) => {
         int_data = parseFloat(data);
-        resData.nb_words_found = int_data + 1;
+        resData.words_found_record = int_data + 1;
   
         client.get('total_attempts').then((data) => {
             int_data = parseFloat(data);
             resData.total_attempts = int_data + int_attempts;
-            resData.average_try = parseFloat(resData.total_attempts / resData.nb_words_found);
+            resData.guess_trials = parseFloat(resData.total_attempts / resData.words_found_record);
     
-            client.set('nb_words_found', resData.nb_words_found);
+            client.set('words_found_record', resData.words_found_record);
             client.set('total_attempts', resData.total_attempts);
-            client.set('average_try', resData.average_try);
+            client.set('guess_trials', resData.guess_trials);
             res.send('Score set succesfully');
         })
     })

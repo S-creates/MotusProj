@@ -38,12 +38,12 @@ app.get('/authorize', (req, res) => {
     }
 });
   
-app.post('/check-login', (req, res) => {
+app.post('/login-checker', (req, res) => {
 	const login = req.body.login;
-	const pwd = req.body.pwd;
+	const passwd = req.body.passwd;
 
 	client.hGet('login', login).then((data) => {
-		if (data && data.trim() === pwd.trim()) {
+		if (data && data.trim() === passwd.trim()) {
 			const code = Math.random().toString(36).substring(7);
 			client.hSet("oauth", code, login);
 			res.send(code);
@@ -55,17 +55,17 @@ app.post('/check-login', (req, res) => {
 
 app.post('/register', (req, res) => {
 	const login = req.body.login;
-	const pwd1 = req.body.pwd1;
-	const pwd2 = req.body.pwd2;
+	const password1 = req.body.password1;
+	const password2 = req.body.password2;
 
 	client.hGet('login', login).then((data) => {
 		if (data) {
 			res.send("<span style='color: red;'>Identifiant déjà existant</span>");
 		} else {
-			if (pwd1.trim() !== pwd2.trim()) {
+			if (password1.trim() !== password2.trim()) {
 				res.send("incorrect");
 			} else {
-				client.hSet("login", login, pwd1);
+				client.hSet("login", login, password1);
 				res.send("registered");
 			}
 		}

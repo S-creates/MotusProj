@@ -12,8 +12,8 @@
     <div id="info"></div>
 
     <form action="/checkword" method="POST" id="form">
-        <label for="guessedWord">Word of the day:</label><br/>
-        <input type="text" id="guessedWord" name="guessedWord" required><br/>
+        <label for="foundWord">Word of the day:</label><br/>
+        <input type="text" id="foundWord" name="foundWord" required><br/>
         <button type="submit">Check</button><br/>
     </form>
 
@@ -36,14 +36,14 @@
         
         form.addEventListener('submit', function (e) {
             e.preventDefault()
-            const guessedWord = document.getElementById('guessedWord').value.toLowerCase()
+            const foundWord = document.getElementById('foundWord').value.toLowerCase()
             fetch('/checkword', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',   
                 },
                 body: new URLSearchParams({
-                    guessedWord: guessedWord
+                    foundWord: foundWord
                 })
             })
             .then(response => response.text())

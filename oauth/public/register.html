@@ -12,11 +12,11 @@
         <label for="login">Login :</label>
         <input type="text" id="login" name="login" required><br/>
 
-        <label for="pwd1">Password :</label>
-        <input type="password" id="pwd1" name="pwd1" required><br/>
+        <label for="password1">Password :</label>
+        <input type="password" id="password1" name="password1" required><br/>
 
-        <label for="pwd2">Retype Password:</label>
-        <input type="password" id="pwd2" name="pwd2" required><br/>
+        <label for="password2">Retype Password:</label>
+        <input type="password" id="password2" name="password2" required><br/>
 
         <button type="submit">Submit</button><br/>
     </form>
@@ -35,8 +35,8 @@
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             const login = document.getElementById('login').value;
-            const pwd1 = document.getElementById('pwd1').value;
-            const pwd2 = document.getElementById('pwd2').value;
+            const password1 = document.getElementById('password1').value;
+            const password2 = document.getElementById('password2').value;
             fetch('/register', {
                 method: 'POST',
                 headers: {
@@ -44,8 +44,8 @@
                 },
                 body: JSON.stringify({
                     login: login,
-                    pwd1: pwd1,
-                    pwd2: pwd2
+                    password1: password1,
+                    password2: password2
                 })
             })
             .then(response => response.text())

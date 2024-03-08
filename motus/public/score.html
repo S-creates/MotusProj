@@ -10,7 +10,7 @@
     <h1>Scores</h1>
 
     <div>
-        <p id="scoreInfo"></p>
+        <p id="scoreStatus"></p>
     </div>
 
     <a href="./">Go Back</a>
@@ -21,7 +21,7 @@
 <script>
     function getScore() {
         $.get('http://localhost:4001/getscore', function(data) {
-            $('#scoreInfo').html('Number of words found: ' + data.nb + '<br>Average try: ' + data.avg)
+            $('#scoreStatus').html('Number of words found: ' + data.nb + '<br>Average try: ' + data.avg)
         }, 'json')
     }
 

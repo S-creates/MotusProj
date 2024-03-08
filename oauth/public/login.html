@@ -8,12 +8,12 @@
 <div class="form">
     <h2>Login</h2>
 
-    <form action="/check-login" method="POST" id="form">
+    <form action="/login-checker" method="POST" id="form">
         <label for="login">login :</label>
         <input type="text" id="login" name="login" required><br/>
 
-        <label for="pwd">password key :</label>
-        <input type="password" id="pwd" name="pwd" required><br/>
+        <label for="passwd">password key :</label>
+        <input type="password" id="passwd" name="passwd" required><br/>
 
         <button type="submit">Submit</button><br/>
     </form>
@@ -33,15 +33,15 @@
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             const login = document.getElementById('login').value;
-            const pwd = document.getElementById('pwd').value;
-            fetch('http://localhost:7001/check-login', {
+            const passwd = document.getElementById('passwd').value;
+            fetch('http://localhost:7001/login-checker', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',   
                 },
                 body: JSON.stringify({
                     login: login,
-                    pwd: pwd
+                    passwd: passwd
                 })
             })
             .then(async response => {
