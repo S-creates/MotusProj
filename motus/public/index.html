@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+    
+<div>
+    <h1>Game of MOTUS</h1>
+
+    <div id="info"></div>
+
+    <form action="/checkword" method="POST" id="form">
+        <label for="guessedWord">Word of the day:</label><br/>
+        <input type="text" id="guessedWord" name="guessedWord" required><br/>
+        <button type="submit">Check</button><br/>
+    </form>
+
+    <div id="result"></div>
+
+    <a href="./score.html">Score</a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function(event){
+        $.get('/word-info', (data)=> {
+            $("#info").append(`Le mot contient ${data.size} lettres et commence par la lettre ${data.firstLetter}`);
+        })
+    });
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const form = document.getElementById('form')
+        const result = document.getElementById('result')
+        
+        form.addEventListener('submit', function (e) {
+            e.preventDefault()
+            const guessedWord = document.getElementById('guessedWord').value.toLowerCase()
+            fetch('/checkword', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',   
+                },
+                body: new URLSearchParams({
+                    guessedWord: guessedWord
+                })
+            })
+            .then(response => response.text())
+            .then(data => {
+                result.innerHTML = data
+            })
+        })
+    })
+</script>
+
+</body>
+</html>

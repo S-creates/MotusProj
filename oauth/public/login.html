@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<head>
+</head>
+
+<div class="form">
+    <h2>Login</h2>
+
+    <form action="/check-login" method="POST" id="form">
+        <label for="login">login :</label>
+        <input type="text" id="login" name="login" required><br/>
+
+        <label for="pwd">password key :</label>
+        <input type="password" id="pwd" name="pwd" required><br/>
+
+        <button type="submit">Submit</button><br/>
+    </form>
+
+    <div id="result"></div>
+
+    <div class="register-login">Register here <a href="/register.html">S'inscrire</a></div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const form = document.getElementById('form');
+        const result = document.getElementById('result');
+        
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const login = document.getElementById('login').value;
+            const pwd = document.getElementById('pwd').value;
+            fetch('http://localhost:7001/check-login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',   
+                },
+                body: JSON.stringify({
+                    login: login,
+                    pwd: pwd
+                })
+            })
+            .then(async response => {
+                if (response.status === 200) {
+                    const code = await response.text();
+
+                    window.location.href = `http://localhost:3001/callback?code=${code}`;
+                } else {
+                    result.innerHTML = "<p>Not adequate</p>";
+                }
+            })
+        })
+    })
+</script>
+
+</body>
+</html>

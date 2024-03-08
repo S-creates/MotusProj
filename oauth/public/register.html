@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<head>
+</head>
+
+<div >
+    <h2>Register</h2>
+
+    <form action="/register" method="POST" id="form">
+        <label for="login">Login :</label>
+        <input type="text" id="login" name="login" required><br/>
+
+        <label for="pwd1">Password :</label>
+        <input type="password" id="pwd1" name="pwd1" required><br/>
+
+        <label for="pwd2">Retype Password:</label>
+        <input type="password" id="pwd2" name="pwd2" required><br/>
+
+        <button type="submit">Submit</button><br/>
+    </form>
+
+    <div id="result"></div>
+
+    <div class="register-login"> Log in<a href="/login.html">Log in</a></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const form = document.getElementById('form');
+        const result = document.getElementById('result');
+        
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const login = document.getElementById('login').value;
+            const pwd1 = document.getElementById('pwd1').value;
+            const pwd2 = document.getElementById('pwd2').value;
+            fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',   
+                },
+                body: JSON.stringify({
+                    login: login,
+                    pwd1: pwd1,
+                    pwd2: pwd2
+                })
+            })
+            .then(response => response.text())
+            .then(data => {
+                result.innerHTML = data;
+            })
+        })
+    })
+</script>
+
+</body>
+</html>

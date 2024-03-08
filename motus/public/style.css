@@ -1,0 +1,11 @@
+.correct {
+    background-color: green;
+}
+
+.present {
+    background-color: orange;
+}
+
+.absent {
+    background-color: transparent; /* ou toute autre couleur que vous préférez */
+}
